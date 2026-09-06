@@ -114,6 +114,11 @@ object FontHelper {
             CATEGORY_ITALIC -> NaConfig.customFontItalic.setConfigString(fontPath)
             CATEGORY_MONO -> NaConfig.customFontMono.setConfigString(fontPath)
         }
+
+        if (fontPath.isNotEmpty() && NekoConfig.typeface.Bool()) {
+            NekoConfig.typeface.setConfigBool(false)
+        }
+
         cachedTypefaces.clear()
         AndroidUtilities.clearTypefaceCache()
         if (ApplicationLoader.applicationContext != null) {
