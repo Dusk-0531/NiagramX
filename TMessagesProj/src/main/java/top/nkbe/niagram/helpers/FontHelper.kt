@@ -109,10 +109,10 @@ object FontHelper {
     @JvmStatic
     fun applyFont(category: Int, fontPath: String) {
         when (category) {
-            CATEGORY_REGULAR -> NaConfig.customFontRegular.value = fontPath
-            CATEGORY_BOLD -> NaConfig.customFontBold.value = fontPath
-            CATEGORY_ITALIC -> NaConfig.customFontItalic.value = fontPath
-            CATEGORY_MONO -> NaConfig.customFontMono.value = fontPath
+            CATEGORY_REGULAR -> NaConfig.customFontRegular.setConfigString(fontPath)
+            CATEGORY_BOLD -> NaConfig.customFontBold.setConfigString(fontPath)
+            CATEGORY_ITALIC -> NaConfig.customFontItalic.setConfigString(fontPath)
+            CATEGORY_MONO -> NaConfig.customFontMono.setConfigString(fontPath)
         }
         cachedTypefaces.clear()
         AndroidUtilities.clearTypefaceCache()

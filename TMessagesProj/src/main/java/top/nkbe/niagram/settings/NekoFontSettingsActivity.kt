@@ -109,7 +109,7 @@ class NekoFontSettingsActivity : BaseFragment() {
         listView?.setOnItemClickListener { view, position ->
             when (position) {
                 useDefaultTypefaceRow -> {
-                    NekoConfig.typeface.value = !NekoConfig.typeface.Bool()
+                    NekoConfig.typeface.setConfigBool(!NekoConfig.typeface.Bool())
                     AndroidUtilities.clearTypefaceCache()
                     if (ApplicationLoader.applicationContext != null) {
                         Theme.reloadAllResources(ApplicationLoader.applicationContext)
@@ -119,7 +119,7 @@ class NekoFontSettingsActivity : BaseFragment() {
                     listAdapter?.notifyDataSetChanged()
                 }
                 forceFontWeightFallbackRow -> {
-                    NekoConfig.forceFontWeightFallback.value = !NekoConfig.forceFontWeightFallback.Bool()
+                    NekoConfig.forceFontWeightFallback.setConfigBool(!NekoConfig.forceFontWeightFallback.Bool())
                     AndroidUtilities.clearTypefaceCache()
                     if (ApplicationLoader.applicationContext != null) {
                         Theme.reloadAllResources(ApplicationLoader.applicationContext)
@@ -302,7 +302,7 @@ class NekoFontSettingsActivity : BaseFragment() {
                     seekBarView.setProgress(progress.coerceIn(0f, 1f))
                     seekBarView.delegate = SeekBarView.SeekBarViewDelegate { _, p ->
                         val size = if (p <= 0.05f) 0 else (12 + (p * 16).toInt())
-                        NaConfig.inputFieldTextSize.value = size
+                        NaConfig.inputFieldTextSize.setConfigInt(size)
                     }
                 }
             }
