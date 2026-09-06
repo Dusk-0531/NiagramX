@@ -50,7 +50,7 @@ if (properties != null) {
 }
 
 keystorePwd = keystorePwd ?: System.getenv('KEYSTORE_PASS') ?: ''
-alias = alias ?: System.getenv('ALIAS_NAME') ?: 'NPigramX'
+alias = alias ?: System.getenv('ALIAS_NAME') ?: ''
 pwd = pwd ?: System.getenv('ALIAS_PASS') ?: ''
 
 def nativeTarget = System.getenv('NATIVE_TARGET') ?: ''
@@ -176,8 +176,8 @@ android {
         }
     }
 
-    def isSigningAvailable = keystorePwd != null && alias != null && pwd != null && !project.hasProperty('withoutSigning') && System.getenv('DEBUG_BUILD') == null
-    if (isSigningAvailable) {
+    def hasReleaseSigning = !keystorePwd.isBlank() && !alias.isBlank() && !pwd.isBlank() && project.file('release.keystore').exists() && !project.hasProperty('withoutSigning') && System.getenv('DEBUG_BUILD') == null
+    if (hasReleaseSigning) {
         signingConfigs {
             release {
                 storeFile project.file('release.keystore')
@@ -196,7 +196,7 @@ android {
             isDefault = true
             debuggable = true
             jniDebuggable = true
-            if (isSigningAvailable) {
+            if (hasReleaseSigning) {
                 signingConfig = signingConfigs.release
             }
         }
@@ -208,8 +208,10 @@ android {
             shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release', 'staging', 'debug']
-            if (isSigningAvailable) {
+            if (hasReleaseSigning) {
                 signingConfig = signingConfigs.release
+            } else {
+                signingConfig = signingConfigs.debug
             }
         }
 
@@ -220,8 +222,10 @@ android {
             shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release', 'staging', 'debug']
-            if (isSigningAvailable) {
+            if (hasReleaseSigning) {
                 signingConfig = signingConfigs.release
+            } else {
+                signingConfig = signingConfigs.debug
             }
         }
     }
@@ -234,7 +238,7 @@ android {
 androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.forEach { output ->
-            String gramName = 'NiagramX'
+            String gramName = 'xiaoman'
             String first = String.format('%s-v%s(%s)', gramName, verName, verCode)
             output.outputFileName.set(
                 output.outputFileName.get()
