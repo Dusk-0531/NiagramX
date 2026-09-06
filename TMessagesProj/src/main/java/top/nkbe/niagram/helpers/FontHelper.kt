@@ -16,6 +16,7 @@ import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.LayoutHelper
 import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.NekoConfig
 import java.io.File
 import java.io.FileInputStream
 import java.security.MessageDigest
